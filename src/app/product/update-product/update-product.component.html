@@ -1,0 +1,92 @@
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center alert alert-dark">
+  <h4 class="display-4 darken-grey-text">Update Product</h4>
+</div>
+<form>
+  <div *ngIf="filePath; else url">
+    <img src="{{filePath}}" style="width: 100%; height: 400px">
+  </div>
+  <ng-template #url>
+    <img src="{{product.urlFile}}" style="width: 100%; height: 400px">
+  </ng-template>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" >Image</span>
+    </div>
+    <input type="file" class="form-control" aria-label="Amount (to the nearest dollar)" (change)="handleFileChooser($event.target.files)">
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">Name</span>
+    </div>
+    <textarea  type="text" [(ngModel)]="product.name" name="name"
+               class="form-control" id="basic-url1" aria-describedby="basic-addon1"></textarea>
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon2">CPU</span>
+    </div>
+    <textarea  type="text" [(ngModel)]="product.cpu" name="cpu"
+               class="form-control" id="basic-url2" aria-describedby="basic-addon2"></textarea>
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon3">RAM</span>
+    </div>
+    <textarea  type="text" [(ngModel)]="product.ram" name="ram"
+               class="form-control" id="basic-url3" aria-describedby="basic-addon3"></textarea>
+  </div>
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon4">Price</span>
+    </div>
+    <textarea  type="text" [(ngModel)]="product.price" name="price"
+               class="form-control" id="basic-url" aria-describedby="basic-addon4"></textarea>
+  </div>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Description</span>
+    </div>
+    <textarea [(ngModel)]="product.description" name="description" rows="4" class="form-control" aria-label="With textarea"></textarea>
+  </div>
+  <br/>
+  <div class="input-group mb-3">
+    <div >
+      <label class="input-group-text lg" >Line</label>
+    </div>
+    <select [(ngModel)]="lineId"  class="custom-select " name="line"  id="inputGroupSelect02">
+      <option value="" hidden selected>{{product.line.name}}</option>
+      <option *ngFor="let line of lineList" value="{{line.id}}">
+        {{line.name}}
+      </option>
+    </select>
+  </div>
+  <br/>
+  <br/>
+  <label for="basic-url">
+    <button type="button" class="btn btn-success btn-lg" (click)="updateProduct(closeModalRef)" >Update </button>
+  </label>
+</form>
+
+<button #closeModalRef hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="alert-success" id="exampleModalLabel">Notify</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-success">
+        <h3>Product Updated Successful!</h3>
+      </div>
+      <div class="modal-footer">
+        <button #closeModalRef1 type="button" class="btn btn-info" data-dismiss="modal">Continue Update Product</button>
+        <button  type="button" class="btn btn-primary" (click)="preview(previewId, closeModalRef1)">Preview Product</button>
+      </div>
+    </div>
+  </div>
+</div>

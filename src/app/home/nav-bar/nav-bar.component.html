@@ -1,0 +1,26 @@
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Home</a>
+  <ul class="navbar-nav px-3">
+    <div *ngIf="info.token; else logIn">
+      <div class="btn-group">
+        <button type="button" class="btn btn-outline-secondary text-light border-1" [routerLink]="'/library/profile/'">{{info.name}}</button>
+        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split border-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="sr-only">Toggle</span>
+        </button>
+        <div class="dropdown-menu" style="background: darkgrey">
+          <a class="dropdown-item" [routerLink]="'/profile'">Settings</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item " (click)="logout()" >Logout</a>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #logIn>
+      <div class="btn-group ">
+        <button class="btn btn-outline-secondary btn-lg border-1 text-light" type="button"  [routerLink]="'/login'" data-toggle="dropdown" >
+          Login
+        </button>
+      </div>
+    </ng-template>
+  </ul>
+</nav>

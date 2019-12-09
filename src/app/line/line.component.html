@@ -1,0 +1,127 @@
+<div class="card mb-4">
+  <div class="card-body">
+    <!-- Grid row -->
+    <div class="row">
+      <button type="button" class="btn btn-outline-success btn-lg border-0" data-toggle="modal" data-target="#exampleModal">
+        New Line
+      </button>
+      <!-- Grid column -->
+      <div class="col-md-12">
+        <div *ngIf="lineList == null else show">
+          <h2 class="pt-3 pb-4 text-center font-bold font-up text-info">Line Is Empty!</h2>
+        </div>
+        <ng-template #show>
+          <h2 class="pt-3 pb-4 text-center font-bold font-up text-info">Total {{lineList.length}} Line Is Present!</h2>
+        </ng-template>
+        <div class="input-group md-form form-sm form-2 pl-0">
+          <input [(ngModel)]="lineName" (keyup)="searchByLineName()" class="form-control my-0 py-1 pl-3 purple-border" type="text" placeholder="Search by name..." aria-label="Search">
+          <span class="input-group-addon waves-effect purple lighten-2" id="basic-addon1">
+            <a><i class="fa fa-search white-text" aria-hidden="true"></i></a></span>
+        </div>
+      </div>
+      <!-- Grid column -->
+    </div>
+    <!-- Grid row -->
+    <!--Table-->
+    <table class="table table-striped">
+      <!--Table head-->
+      <thead>
+      <tr>
+        <td>#</td>
+        <th>Line</th>
+        <th>Id</th>
+        <th>Update/Delete</th>
+      </tr>
+      </thead>
+      <!--Table head-->
+      <!--Table body-->
+      <tbody>
+      <tr *ngFor="let line of lineList, index as i">
+        <th scope="row">{{i + 1}}</th>
+        <td><a [routerLink]="'/blog/' + line.id">{{line.name}}</a></td>
+        <td>{{line.id}}</td>
+        <td>
+          <button type="button" (click)="getLineId(line.id)" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal1">
+            Update
+          </button>&nbsp;
+          <button (click)="getLineId(line.id)" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal2">
+            Delete
+          </button>
+        </td>
+      </tr>
+      <!--Table body-->
+    </table>
+    <!--Table-->
+
+    <!--modal create manage-tag-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalLabel">New Line</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form [formGroup]="lineForm">
+            <div class="modal-body">
+              <h4 class="danger-text"><label class="text-info">Name Line</label></h4>
+              <input class="input-group" type="text" name="name" formControlName="name" >
+            </div>
+            <div class="modal-footer">
+              <button  #closeModalRef type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-success" (click)="createLine(closeModalRef)">Create</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--modal edit manage-tag-->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLabel1">Update</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="lineForm">
+        <div class="modal-body">
+          <h4 class="danger-text"><label class="text-info">Update Name Line</label></h4>
+          <input class="input-group" type="text" name="name" formControlName="name" >
+        </div>
+        <div class="modal-footer">
+          <button  #closeModalRef1 type="button" class="btn btn-outline-dark" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-outline-success" (click)="updateLine(closeModalRef1)">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<!--modal delete manage-tag-->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-warning" id="exampleModalLabel2">Warning</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h4 class="text-danger"><strong>This Line and Product of this Line will be delete. Are you sure?</strong></h4>
+      </div>
+      <div class="modal-footer">
+        <button  #closeModalRef2 type="button" class="btn btn-outline-success" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-outline-warning" (click)="deleteLine(closeModalRef2)">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
