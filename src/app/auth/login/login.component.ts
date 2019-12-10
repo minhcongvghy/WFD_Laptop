@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
         this.token.saveUserId(data.id);
         this.token.saveName(data.name);
         this.token.saveEmail(data.email);
+        this.token.saveAvatar(data.avatar);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;

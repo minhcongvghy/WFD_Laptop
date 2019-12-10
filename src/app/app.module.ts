@@ -24,6 +24,7 @@ import { DetailProductComponent } from './product/detail-product/detail-product.
 import { UpdateProductComponent } from './product/update-product/update-product.component';
 import { ShowProductByLineComponent } from './product/show-product-by-line/show-product-by-line.component';
 import { ListProductComponent } from './product/list-product/list-product.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { ListProductComponent } from './product/list-product/list-product.compon
     FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    NgxPaginationModule
   ],
   providers: [Permissions, CanActivateTeam, NotActivateTeam, IsAdmin],
   bootstrap: [AppComponent]

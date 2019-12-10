@@ -5,6 +5,8 @@ import {AuthService} from '../auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {PassForm} from './pass-form';
+import {UserService} from '../../services/user.service';
+import {User} from '../../model/user';
 
 @Component({
   selector: 'app-profile-user',
@@ -13,6 +15,9 @@ import {PassForm} from './pass-form';
 })
 export class ProfileUserComponent implements OnInit {
   info: any;
+  user: User;
+  private filePath: any;
+  private fileUpload: File;
   inputName = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)])
   });
@@ -27,9 +32,13 @@ export class ProfileUserComponent implements OnInit {
     newPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(100)]),
     confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(100)])
   });
+  private processValue = 0;
   constructor(private token: TokenStorageService, private authService: AuthService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private userService: UserService) {
+
+  }
 
   ngOnInit() {
     this.info = {
@@ -38,9 +47,11 @@ export class ProfileUserComponent implements OnInit {
       username: this.token.getUsername(),
       role: this.token.getAuthorities(),
       userId: this.token.getUserId(),
-      email: this.token.getEmail()
+      email: this.token.getEmail(),
+      avatar: this.token.getAvatar(),
     };
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/login';
+    this.getUser();
   }
 
   updatePassword(closeButton: HTMLInputElement) {
@@ -98,4 +109,54 @@ export class ProfileUserComponent implements OnInit {
     this.router.navigateByUrl(this.returnUrl);
   }
 
+  handleFileChooser(files: FileList) {
+    this.fileUpload = files.item(0);
+    const reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+    reader.onload = (event) => {
+      this.filePath = reader.result;
+    };
+  }
+
+  saveAvatar(openProcessBar: HTMLButtonElement, closeProcess: HTMLButtonElement) {
+    if (this.token) {
+      const count = setInterval(() => {
+        this.processValue += 10;
+        if (this.processValue === 90) {
+          this.processValue += 9;
+          clearInterval(count);
+        }
+      }, 1000);
+      openProcessBar.click();
+      const form = new FormData();
+      form.append('file', this.fileUpload);
+      this.userService.uploadUserAvatar(form, this.token.getUserId()).subscribe(
+        result => {
+          clearInterval(count);
+          this.processValue = 100;
+          setTimeout(() => {
+            this.getUser();
+            this.token.saveAvatar(this.user.avatar);
+            console.log('ok');
+            closeProcess.click();
+            this.processValue = 0;
+          }, 2000);
+        }, error1 => {
+          console.log(error1);
+        }
+      );
+    }
+  }
+
+  getUser() {
+    if (this.token) {
+      this.userService.getUserById(this.token.getUserId()).subscribe(
+        result => {
+          this.user = result;
+        }, error1 => {
+          console.log(error1);
+        }
+      );
+    }
+  }
 }

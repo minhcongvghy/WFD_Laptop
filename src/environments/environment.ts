@@ -13,6 +13,7 @@ export const environment = {
   albumUploadAvatarUrl: 'http://localhost:8080/api/auth/album-avatar/',
   albumUploadImageUrl: 'http://localhost:8080/api/auth/album-add-image/',
   imageUrl: 'http://localhost:8080/api/auth/image/',
+  UserAvatarUrl: 'http://localhost:8080/api/auth/user-avatar/',
 
   loginUrl: 'http://localhost:8080/api/auth/signin',
   signupUrl: 'http://localhost:8080/api/auth/signup',

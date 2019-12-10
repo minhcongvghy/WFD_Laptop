@@ -6,6 +6,7 @@ import {Product} from '../model/product';
 import {FileForm} from '../model/file-form';
 import {SearchProductByName} from '../model/search-product-by-name';
 import {SearchProductByNameAndLine} from '../model/search-product-by-name-and-line';
+import {Pagination} from '../model/pagination';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -20,6 +21,14 @@ export class ProductService {
 
   private productUrl = environment.productUrl;
   private uploadFileUrl = environment.productUploadFileUrl;
+
+  getListProductAndPaginationASC(page: number): Observable<Pagination> {
+    return this.http.get<Pagination>(this.productUrl + 'pagination/ASC?page=' + page);
+  }
+
+  getListProductAndPaginationDESC(page: number): Observable<Pagination> {
+    return this.http.get<Pagination>(this.productUrl + 'pagination/DESC?page=' + page);
+  }
 
   getListProduct(): Observable<Product[]> {
     return this.http.get<Product[]>(this.productUrl);
