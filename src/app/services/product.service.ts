@@ -7,6 +7,7 @@ import {FileForm} from '../model/file-form';
 import {SearchProductByName} from '../model/search-product-by-name';
 import {SearchProductByNameAndLine} from '../model/search-product-by-name-and-line';
 import {Pagination} from '../model/pagination';
+import {SearchProductByLineId} from '../model/search-product-by-line-id';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -60,6 +61,10 @@ export class ProductService {
 
   searchProductByName(name: SearchProductByName): Observable<Product[]> {
     return this.http.post<Product[]>(this.productUrl + 'search-by-name', name);
+  }
+
+  searchProductByLineId(id: string): Observable<Product[]> {
+    return this.http.get<Product[]>(this.productUrl + 'search-by-lineId/' + id );
   }
 
   searchProductByLineAndName(searchForm: SearchProductByNameAndLine): Observable<Product[]> {

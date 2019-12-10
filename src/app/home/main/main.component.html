@@ -19,7 +19,12 @@
 
 
 
-  <input [(ngModel)]="name" (keyup)="searchByName()" class="form-control form-control-danger w-100" type="text" placeholder="Search" aria-label="Search">
+  <input [(ngModel)]="name" (keyup)="searchProduct()" class="form-control form-control-danger w-50" type="text" placeholder="Search" aria-label="Search">
+  <br/>
+  <select [(ngModel)]="lineId" id="ilceler" class="form-control" (change)="searchProduct()">
+    <option selected disabled hidden value="null">Select line</option>
+    <option *ngFor="let line of listLine" value="{{line.id}}">{{line.name}}</option>
+  </select>
   <div class="album py-5 bg-light">
     <div class="container">
 
