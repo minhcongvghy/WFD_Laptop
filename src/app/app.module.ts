@@ -22,7 +22,6 @@ import { ProductComponent } from './product/product.component';
 import { CreateProductComponent } from './product/create-product/create-product.component';
 import { DetailProductComponent } from './product/detail-product/detail-product.component';
 import { UpdateProductComponent } from './product/update-product/update-product.component';
-import { ShowProductByLineComponent } from './product/show-product-by-line/show-product-by-line.component';
 import { ListProductComponent } from './product/list-product/list-product.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 
@@ -42,7 +41,6 @@ import {NgxPaginationModule} from 'ngx-pagination';
     CreateProductComponent,
     DetailProductComponent,
     UpdateProductComponent,
-    ShowProductByLineComponent,
     ListProductComponent,
 
   ],
